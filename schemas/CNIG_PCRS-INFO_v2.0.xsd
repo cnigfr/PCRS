@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:pcrs="http://cnig.gouv.fr/pcrs" xmlns:pcrs-i="http://cnig.gouv.fr/pcrs-information" elementFormDefault="qualified" targetNamespace="http://cnig.gouv.fr/pcrs-information" version="2.0">
+  <import namespace="http://cnig.gouv.fr/pcrs" schemaLocation="./CNIG_PCRS_v2.0.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+  <element name="EmpriseDisponibilitePCRS" substitutionGroup="gml:AbstractFeature" type="pcrs-i:EmpriseDisponibilitePCRSType">
+    <annotation>
+      <documentation>Emprise de disponibilité du PCRS: Une emprise de disponibilité du PCRS constitue un élément surfacique d'indication des zones disponibles à une date donnée. Cette information permet de savoir si un plan PCRS est disponible sur une zone donnée. Elle vient compléter la classe InitiativePCRS qui indique sur quelle zone un PCRS est prévu mais pas nécessairement disponible.
+NOTE Surface.</documentation>
+    </annotation>
+  </element>
+  <complexType name="EmpriseDisponibilitePCRSType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element minOccurs="0" name="dateActualite" type="date">
+            <annotation>
+              <documentation>Date à laquelle la disponibilité est valide.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="calendrier" type="pcrs:CalendrierPCRSTypeType">
+            <annotation>
+              <documentation>Type de date.</documentation>
+            </annotation>
+          </element>
+          <element name="geometrie" type="gml:MultiSurfacePropertyType">
+            <annotation>
+              <documentation>Géométrie représentée par un ensemble de surfaces.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="troncon">
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="pcrs:TronconVoirie"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="commune">
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="pcrs:Commune"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+          <element name="initiative">
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="pcrs-i:InitiativePCRS"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="InitiativePCRS" substitutionGroup="gml:AbstractFeature" type="pcrs-i:InitiativePCRSType">
+    <annotation>
+      <documentation>Initiative du PCRS: Une initiative du PCRS constitue une zone dans laquelle différents acteurs se sont coordonnés pour initier un PCRS. Cette classe pourra permettre d'alimenter l'observatoire du PCRS (http://cnig.gouv.fr/pcrs/obs_pcrs/?q=carto).
+NOTE Surface.</documentation>
+    </annotation>
+  </element>
+  <complexType name="InitiativePCRSType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="partenaires" type="string">
+            <annotation>
+              <documentation>Nom des partenaires dans l'initiative</documentation>
+            </annotation>
+          </element>
+          <element name="gestionnaire" type="string">
+            <annotation>
+              <documentation>Nom de l'autorité publique compétente gestionnaire du PCRS</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="description" type="string">
+            <annotation>
+              <documentation>Information complémentaire liée à l'initiative.</documentation>
+            </annotation>
+          </element>
+          <element name="geometrie" type="gml:MultiSurfacePropertyType">
+            <annotation>
+              <documentation>Géométrie représentée par un ensemble de surfaces.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="commune">
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="pcrs:Commune"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+</schema>

@@ -1,0 +1,1509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:pcrs="http://cnig.gouv.fr/pcrs" xmlns:pcrs-i="http://cnig.gouv.fr/pcrs-information" targetNamespace="http://cnig.gouv.fr/pcrs" elementFormDefault="qualified" version="2.0beta2">
+	<import namespace="http://cnig.gouv.fr/pcrs-information" schemaLocation="./CNIG_PCRS-INFO_v2.0.xsd"/>
+	<import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+	<element name="AffleurantEnveloppePCRS" type="pcrs:AffleurantEnveloppePCRSType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Affleurant du PCRS représenté par son enveloppe (périmètre): Classe permettant de décrire la représentation d'un affleurant sous forme d'enveloppe.
+NOTE Polygone (GM_Polygon)
+L'enveloppe, autrement dit le périmètre de l'affleurant, est modélisée par un unique polygone non auto-intersectant et ne présentant aucun trou dans sa définition d'intérieur.</documentation>
+		</annotation>
+	</element>
+	<complexType name="AffleurantEnveloppePCRSType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="geometrie">
+						<annotation>
+							<documentation>Géométrie de type enveloppe.</documentation>
+						</annotation>
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="gml:Polygon"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+						</complexType>
+					</element>
+					<element name="habillage" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="pcrs:HabillageLignesPCRS"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+							<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="AffleurantEnveloppePCRSPropertyType">
+		<sequence minOccurs="0">
+			<element ref="pcrs:AffleurantEnveloppePCRS"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</complexType>
+	<element name="AffleurantGeometriquePCRS" type="pcrs:AffleurantGeometriquePCRSType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>&lt;/b&gt;
+Classe permettant de fournir diverses représentations géométriques.
+&lt;b&gt;
+NOTE &lt;/b&gt;
+Selon les représentations liées</documentation>
+		</annotation>
+	</element>
+	<complexType name="AffleurantGeometriquePCRSType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="enveloppe" type="pcrs:AffleurantEnveloppePCRSPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="ligne" type="pcrs:AffleurantLignesPCRSPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="point" type="pcrs:AffleurantPointPCRSPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="AffleurantLignesPCRS" type="pcrs:AffleurantLignesPCRSType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Affleurant du PCRS représenté par une ligne.: Classe permettant de décrire la représentation de l&amp;rsquo;affleurant sous forme de lignes
+NOTE Ensemble de courbes (GM_MultiCurve)
+La géométrie de l'affleurant, est modélisée par un ensemble de courbes.</documentation>
+		</annotation>
+	</element>
+	<complexType name="AffleurantLignesPCRSType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="geometrie" type="gml:MultiCurvePropertyType">
+						<annotation>
+							<documentation>Géométrie composée d'un ensemble de lignes.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="AffleurantLignesPCRSPropertyType">
+		<sequence minOccurs="0">
+			<element ref="pcrs:AffleurantLignesPCRS"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</complexType>
+	<element name="AffleurantPCRS" type="pcrs:AffleurantPCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Affleurant du PCRS: Classe permettant de décrire une partie d&amp;rsquo;un réseau existant visible depuis la surface
+IMPORTANT : un affleurant de réseau correspond  à un objet métier géré non pas par la collectivité gestionnaire du PCRS mais par l'opérateur gestionnaire du réseau. Il figure toutefois dans la liste des objets échangés dans un PCRS de façon à partager la localisation précise de tous les objets d'un réseau visibles depuis la surface. Chaque gestionnaire reste responsable de ses affleurants.
+NOTE Selon les classes d'affleurant liées, et représentées (de préférence) par une représentation exhaustive et interopérable comme le polygone AffleurantEnveloppePCRS, éventuellement complété par un habillage de type HabillageLignesPCRS, néanmoins d'autres modélisation géométriques sont offertes afin de ne pas perdre d'informations. 
+La modélisation géométrique est propre à chacune des classes d'affleurant AffleurantXXXPCRS du PCRS</documentation>
+		</annotation>
+	</element>
+	<complexType name="AffleurantPCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="gestionnaire" type="string" minOccurs="0">
+						<annotation>
+							<documentation>Nom court, sigle, acronyme de l'opérateur gestionnaire du réseau et fournisseur de la donnée</documentation>
+						</annotation>
+					</element>
+					<element name="nature" type="pcrs:NatureAffleurantPCRSTypeType" minOccurs="0">
+						<annotation>
+							<documentation>Nature de l'affleurant</documentation>
+						</annotation>
+					</element>
+					<element name="reseau" type="pcrs:NatureReseauPCRSTypeType" minOccurs="0">
+						<annotation>
+							<documentation>Nature du réseau</documentation>
+						</annotation>
+					</element>
+					<element name="source" type="string" minOccurs="0">
+						<annotation>
+							<documentation>Source des données d'affleurant dans le SI du gestionnaire de réseaux</documentation>
+						</annotation>
+					</element>
+					<element name="idSource" type="string" minOccurs="0">
+						<annotation>
+							<documentation>Identifiant unique de l'affleurant</documentation>
+						</annotation>
+					</element>
+					<element name="symbolisation" type="pcrs:AffleurantSymbolePCRSPropertyType" minOccurs="0"/>
+					<element name="representation">
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="pcrs:AffleurantGeometriquePCRS"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+							<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="AffleurantPCRSPropertyType">
+		<sequence minOccurs="0">
+			<element ref="pcrs:AffleurantPCRS"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</complexType>
+	<element name="AffleurantPointPCRS" type="pcrs:AffleurantPointPCRSType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Affleurant du PCRS représenté par un point.: Classe permettant de décrire la représentation de l&amp;rsquo;affleurant sous forme de point.
+NOTE Ponctuel (GM_Point)
+La géométrie de l'affleurant, est modélisée par un point représentant le centroide de l'affleurant.</documentation>
+		</annotation>
+	</element>
+	<complexType name="AffleurantPointPCRSType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="geometrie" type="gml:PointPropertyType">
+						<annotation>
+							<documentation>Géométrie de type ponctuel.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="AffleurantPointPCRSPropertyType">
+		<sequence minOccurs="0">
+			<element ref="pcrs:AffleurantPointPCRS"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</complexType>
+	<element name="AffleurantSymbolePCRS" type="pcrs:AffleurantSymbolePCRSType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Affleurant du PCRS représenté par un symbole, associé à un point de placement du symbole.: Classe permettant de décrire de façon symbolique un affleurant.
+NOTE Point défini en planimétrie (XY) et altimétrie (Z), et permettant le positionnement du centre d'un symbole correctement orienté et mis à l'échelle et lié au réseau et type d'affleurant concerné
+Le ou les points levés nécessaires au levé précis de l'affleurant doivent permettre :
+- d'une part de localiser avec une précision planimétrique et centimétrique maîtrisée le positionnement du point d'origine locale du symbole,
+- d'autre part de déterminer avec la même précision planimétrique les dimensions de longueur (plus grande dimension) et de largeur (dimension inférieure ou égale à la plus grande dimension) permettant la mise à l'échelle du symbole,
+enfin de déterminer l'angle de rotation utilisé pour orienter correctement le symbole
+La représentation par symbole doit en outre être augmentée de la localisation des points levés de façon à se prémunir des risques liés à une représentation incorrecte du symbole de l'affleurant.</documentation>
+		</annotation>
+	</element>
+	<complexType name="AffleurantSymbolePCRSType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="geometrie" type="gml:PointPropertyType">
+						<annotation>
+							<documentation>Géométrie ponctuelle.</documentation>
+						</annotation>
+					</element>
+					<element name="reference" type="string">
+						<annotation>
+							<documentation>Désignation du symbole à utiliser pour la représentation de l'affleurant.</documentation>
+						</annotation>
+					</element>
+					<element name="angleRotation" type="double">
+						<annotation>
+							<documentation>Angle utilisé uniquement pour l'orientation du symbole d'affleurant, dans le sens horaire par rapport au nord.</documentation>
+						</annotation>
+					</element>
+					<element name="longueur_mm" type="double">
+						<annotation>
+							<documentation>Utilisé uniquement pour la mise à l'échelle X du symbole de l'affleurant</documentation>
+						</annotation>
+					</element>
+					<element name="largeur_mm" type="double">
+						<annotation>
+							<documentation>Utilisé uniquement pour la mise à l'échelle Y du symbole de l'affleurant</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="AffleurantSymbolePCRSPropertyType">
+		<sequence minOccurs="0">
+			<element ref="pcrs:AffleurantSymbolePCRS"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</complexType>
+	<element name="ArbrePCRS" type="pcrs:ArbrePCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Arbre: Classe permettant de décrire les arbres régulièrement entretenus de la voirie du domaine public.
+PHOTO
+(© Ville de Rennes)
+NOTE Point (GM_Point)
+L'arbre est modélisé par un point levé en axe du tronc, à hauteur du terrain naturel hors éventuel monticule au pied
+PHOTO
+Les autres aspects de la modélisation géométrique sont propres à ceux décrits dans la modélisation des objets linéaires de la classe abstraite ObjetVecteurPCRS</documentation>
+		</annotation>
+	</element>
+	<complexType name="ArbrePCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:PointPropertyType"/>
+					<element name="reference" type="string"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="ArbrePCRSPropertyType">
+		<sequence minOccurs="0">
+			<element ref="pcrs:ArbrePCRS"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</complexType>
+	<simpleType name="CalendrierPCRSTypeType">
+		<union memberTypes="pcrs:CalendrierPCRSTypeEnumerationType pcrs:CalendrierPCRSTypeOtherType"/>
+	</simpleType>
+	<simpleType name="CalendrierPCRSTypeEnumerationType">
+		<restriction base="string">
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+			<enumeration value="04"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="CalendrierPCRSTypeOtherType">
+		<restriction base="string">
+			<pattern value="other: \w{2,}"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="CategorieMurPCRSTypeType">
+		<restriction base="string">
+			<enumeration value="06"/>
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+			<enumeration value="04"/>
+			<enumeration value="05"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="CategoriePlacementPCRSTypeType">
+		<annotation>
+			<documentation>Code permettant de décrire le type de positionnement des éléments d'habillage</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+			<enumeration value="04"/>
+			<enumeration value="05"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="CategoriePrecisionPCRSTypeType">
+		<annotation>
+			<documentation>Code permettant de décrire un intervalle de précision exprimée en cm associée au levé d'un objet ou d'un affleurant du PCRS</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="002"/>
+			<enumeration value="005"/>
+			<enumeration value="010"/>
+			<enumeration value="040"/>
+			<enumeration value="150"/>
+			<enumeration value="999"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="CategorieThematiquePCRSTypeType">
+		<annotation>
+			<documentation>Code permettant de décrire la thématique rattachée à un objet donné du PCRS</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="10"/>
+			<enumeration value="11"/>
+			<enumeration value="00"/>
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+			<enumeration value="04"/>
+			<enumeration value="05"/>
+			<enumeration value="06"/>
+			<enumeration value="07"/>
+			<enumeration value="08"/>
+			<enumeration value="09"/>
+			<enumeration value="99"/>
+		</restriction>
+	</simpleType>
+	<element name="Commune" type="pcrs:CommuneType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Lien vers un objet commune: Cette classe permet de référencer une commune présente dans un référentiel externe.
+NOTE Multi Polygone (GM_MultiPolygon)
+Les commune sont modélisées par un ensemble de polygones. La géométrie est indicative et la précision géométrique accordée importe peu.</documentation>
+		</annotation>
+	</element>
+	<complexType name="CommuneType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="codeINSEE" type="string">
+						<annotation>
+							<documentation>Code INSEE de la commune.</documentation>
+						</annotation>
+					</element>
+					<element name="nom" type="string" minOccurs="0">
+						<annotation>
+							<documentation>Nom de la commune.</documentation>
+						</annotation>
+					</element>
+					<element name="geometrie" type="gml:MultiSurfacePropertyType">
+						<annotation>
+							<documentation>Géométrie de la commune</documentation>
+						</annotation>
+					</element>
+					<element name="reference" type="string">
+						<annotation>
+							<documentation>Référence vers une base de données des communes.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="EmpriseEchangePCRS" type="pcrs:EmpriseEchangePCRSType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Emprise d'échange du PCRS: Une emprise d'échange du PCRS constitue un élément surfacique de délimitation de l'espace public, et lorsque disponible de l'espace privé. Elle est localisée sur une commune, et peut être qualifiée par les tronçons de voirie concernés.
+Une emprise d'échange du PCRS permet d'accéder à l'ensemble des éléments constituant le PCRS, et sert en particulier à repérer les objets du PCRS, en général associés à une thématique et porteurs de précision, ainsi que les affleurants de réseaux de tous types.
+Parmi les éléments d'habillage d'une emprise d'échange du PCRS, on distinguera en particulier les noms ainsi que les numéros de voirie devant obligatoirement figurer dans un PCRS.
+Une emprise d'échange du PCRS contient également des éléments de calendrier précisant la date de publication des données concernées.
+Même si la faisabilité de l'utilisation de l'image pour répondre aux obligations DT/DICT reste à démontrer, le modèle de données en prévoit la gestion : ainsi, l'emprise d'échange du PCRS peut également être décrite par une ou plusieurs images haute ou très haute résolution éventuellent complétées d'objets vecteurs.
+NOTE Surface
+La collectivité gestionnaire du PCRS a toute latitude quant à la définition géométrique des emprises de publication du PCRS &amp;ndash; il est toutefois conseillé de publier le PCRS à au moins deux niveaux complémentaires d'emprises, à savoir un niveau continu (ou régulier, fixe) et associé à un découpage régulier du territoire (comme un carroyage) et un niveau discontinu (ou irrégulier, variable) correspondant à des découpages à base d&amp;rsquo;entités (tronçons, voire communes&amp;hellip;).</documentation>
+		</annotation>
+	</element>
+	<complexType name="EmpriseEchangePCRSType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="fournisseur" type="string">
+						<annotation>
+							<documentation>Nom de la collectivité gestionnaire du PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="datePublication" type="date">
+						<annotation>
+							<documentation>Date de mise à disposition de l'emprise du PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="complement" type="string" minOccurs="0">
+						<annotation>
+							<documentation>Information complémentaire liée au type d'emprise de publication du PCRS, gérée par le gestionnaire du PCRS et potentiellement utile à tout utilisateur du PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="type" type="string" minOccurs="0">
+						<annotation>
+							<documentation>Type d'emprise du PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="geometrie" type="gml:MultiSurfacePropertyType"/>
+					<element name="idEmprise" type="string"/>
+					<element name="raster" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="gml:AbstractFeatureMemberType">
+									<sequence minOccurs="0">
+										<element ref="pcrs:RasterPCRS"/>
+									</sequence>
+									<attributeGroup ref="gml:AssociationAttributeGroup"/>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+					<element name="objet" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="gml:AbstractFeatureMemberType">
+									<sequence minOccurs="0">
+										<element ref="pcrs:ObjetVecteurPCRS"/>
+									</sequence>
+									<attributeGroup ref="gml:AssociationAttributeGroup"/>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+					<element name="commune" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="pcrs:Commune"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+							<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+						</complexType>
+					</element>
+					<element name="troncon" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="pcrs:TronconVoirie"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+							<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+						</complexType>
+					</element>
+					<element name="habillage" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="gml:AbstractFeatureMemberType">
+									<sequence minOccurs="0">
+										<element ref="pcrs:HabillagePCRS"/>
+									</sequence>
+									<attributeGroup ref="gml:AssociationAttributeGroup"/>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="FacadePCRS" type="pcrs:FacadePCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Façade de bâtiment, murs de façade: Classe permettant de décrire les éléments de gros-oeuvre, parfois de second-oeuvre, participant aux faces extérieures d'un bâtiment public ou privé et présentant une importance étendue
+NOTE Polyligne
+La façade est levée au niveau du « nu » du mur principal à la hauteur du soubassement (ou du trottoir en absence de soubassement), en privilégiant autant que possible un levé en entier du bâtiment, formant ainsi une polyligne fermée. Lorsque le bâtiment ne peut être levé en entier en tant que façade, la polyligne résultante est alors une polyligne ouverte</documentation>
+		</annotation>
+	</element>
+	<complexType name="FacadePCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType">
+						<annotation>
+							<documentation>Géométrie de type courbe.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="HabillageEnveloppePCRS" type="pcrs:HabillageEnveloppePCRSType" substitutionGroup="pcrs:HabillagePCRS">
+		<annotation>
+			<documentation>Enveloppes d'habillage du PCRS: Classe spécialisée de la classe abstraite &lt;HabillagePCRS&gt; permettant de décrire tous les éléments d'habillage de type surfaciques utiles à la compréhension du PCRS
+NOTE Surface</documentation>
+		</annotation>
+	</element>
+	<complexType name="HabillageEnveloppePCRSType">
+		<complexContent>
+			<extension base="pcrs:HabillagePCRSType">
+				<sequence>
+					<element name="geometrie">
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="gml:Polygon"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="HabillageLignesPCRS" type="pcrs:HabillageLignesPCRSType" substitutionGroup="pcrs:HabillagePCRS">
+		<annotation>
+			<documentation>Lignes d'habillage du PCRS: Classe spécialisée de la classe abstraite &lt;HabillagePCRS&gt; permettant de décrire tous les éléments d'habillage de type lignes utiles à la compréhension du PCRS
+NOTE Multilignes</documentation>
+		</annotation>
+	</element>
+	<complexType name="HabillageLignesPCRSType">
+		<complexContent>
+			<extension base="pcrs:HabillagePCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:MultiCurvePropertyType">
+						<annotation>
+							<documentation>Géométrie de type  multi-courbe.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="HabillagePCRS" type="pcrs:HabillagePCRSType" abstract="true" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Eléments d'habillage du PCRS: Classe abstraite permettant de décrire tous les éléments d'habillage utiles à la compréhension du PCRS  via les classes spécialisées HabillagePointPCRS, HabillageLignePCRS, HabillageSymbolePCRS, HabillageTextePCRS
+NOTE Point, Polyligne, Surface
+Élément d'habillage (de type point, ligne ou surface ou support de texte) sans précision de géoréférencement associée</documentation>
+		</annotation>
+	</element>
+	<complexType name="HabillagePCRSType" abstract="true">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="idHabillage" type="string">
+						<annotation>
+							<documentation>Identifiant unique de l'habillage.</documentation>
+						</annotation>
+					</element>
+					<element name="thematique" type="pcrs:CategorieThematiquePCRSTypeType">
+						<annotation>
+							<documentation>La thématique à laquelle est associé l'élément d'habillage du PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="habillage" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="pcrs:HabillagePCRS"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+							<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="HabillagePointsPCRS" type="pcrs:HabillagePointsPCRSType" substitutionGroup="pcrs:HabillagePCRS">
+		<annotation>
+			<documentation>Points d'habillage du PCRS: Classe spécialisée de la classe abstraite &lt;HabillagePCRS&gt; permettant de décrire tous les éléments d'habillage de type points (éventuellement multiples) utiles à la compréhension du PCRS. Pour les points accompagnés d&amp;rsquo;un symbole, une classe HabillageSymbolePCRS est prévue.
+NOTE Multipoints</documentation>
+		</annotation>
+	</element>
+	<complexType name="HabillagePointsPCRSType">
+		<complexContent>
+			<extension base="pcrs:HabillagePCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:MultiPointPropertyType">
+						<annotation>
+							<documentation>Géométrie de type multi-point.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="HabillageSymbolePCRS" type="pcrs:HabillageSymbolePCRSType" substitutionGroup="pcrs:HabillagePCRS">
+		<annotation>
+			<documentation>Symbole d'habillage du PCRS: Classe spécialisée de la classe abstraite HabillagePCRSpermettant de décrire tous les éléments d'habillage de type symbole utiles à la compréhension du PCRS
+NOTE Point (propriété de la classe généralisée HabillagePCRS)
+Point de référence au centre du symbole, dont on précisera la référence, les dimensions inscrites dans un rectangle (longueur, largeur), et l'orientation spécifique.</documentation>
+		</annotation>
+	</element>
+	<complexType name="HabillageSymbolePCRSType">
+		<complexContent>
+			<extension base="pcrs:HabillagePCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:PointPropertyType">
+						<annotation>
+							<documentation>Géométrie de type  multi-courbe.</documentation>
+						</annotation>
+					</element>
+					<element name="reference" type="string">
+						<annotation>
+							<documentation>Désignation du symbole à utiliser pour la représentation de l'habillage sous forme de symbole.</documentation>
+						</annotation>
+					</element>
+					<element name="angleRotation" type="double">
+						<annotation>
+							<documentation>Utilisé uniquement pour l'orientation de l'élément d'habillage</documentation>
+						</annotation>
+					</element>
+					<element name="longueur_mm" type="double">
+						<annotation>
+							<documentation>Utilisé uniquement pour la mise à l'échelle X du symbole en habillage</documentation>
+						</annotation>
+					</element>
+					<element name="largeur_mm" type="double">
+						<annotation>
+							<documentation>Utilisé uniquement pour la mise à l'échelle Y du symbole en habillage</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="HabillageTextePCRS" type="pcrs:HabillageTextePCRSType" substitutionGroup="pcrs:HabillagePCRS">
+		<annotation>
+			<documentation>Texte d'habillage du PCRS: Classe spécialisée de la classe abstraite HabillagePCRS permettant de décrire tous les éléments d'habillage de type texte utiles à la compréhension du PCRS
+NOTE Point (propriété de la classe généralisée HabillagePCRS)
+Libellé de type texte positionné de façon ponctuelle, avec possibilité de spécifier une orientation spécifique.</documentation>
+		</annotation>
+	</element>
+	<complexType name="HabillageTextePCRSType">
+		<complexContent>
+			<extension base="pcrs:HabillagePCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:PointPropertyType">
+						<annotation>
+							<documentation>Géométrie de type point.</documentation>
+						</annotation>
+					</element>
+					<element name="libelle" type="string">
+						<annotation>
+							<documentation>Texte du libellé à utiliser comme habillage du PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="angleRotation" type="double">
+						<annotation>
+							<documentation>Utilisé uniquement pour l'orientation de l'élément d'habillage</documentation>
+						</annotation>
+					</element>
+					<element name="justification" type="pcrs:TexteJustificationPCRSTypeType">
+						<annotation>
+							<documentation>Utilisé pour la justification du texte</documentation>
+						</annotation>
+					</element>
+					<element name="taille" type="double">
+						<annotation>
+							<documentation>Facteur de taille permettant le cas échéant aux utilisateurs de pondérer la taille du texte</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="LimiteVoiriePCRS" type="pcrs:LimiteVoiriePCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Limite de voirie: Toute limite apparente de la chaussée, caractérisée par une bordure ou un changement de revêtement est décrite par un objet de cette classe.
+NOTE Polyligne
+Les changements de revêtement sont levés point à point au niveau du sol.
+Les quais, bordures, bordurettes... qui marquent la limite de la chaussée sont levés point à point, le long du fil d'eau uniquement. Pour les nouveaux levés, il est conseillé de laisser l&amp;rsquo;objet à gauche. 
+Les autres aspects de la modélisation géométrique sont propres à  ceux décrits dans la modélisation des objets linéaires de la classe abstraite ObjetVecteurPCRS.</documentation>
+		</annotation>
+	</element>
+	<complexType name="LimiteVoiriePCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType">
+						<annotation>
+							<documentation>Géométrie de type courbe.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="MarcheEscalierPCRS" type="pcrs:MarcheEscalierPCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Marche d'escalier: Classe permettant de décrire une « marche permettant de franchir une dénivellation, à dissocier des proéminences de bâtiments. A généraliser aux marches dans la voirie. » (d'après AIVF_20_1)
+NOTE Polyligne
+Un escalier est composé d'une ou plusieurs portions, séparées par des paliers intermédiaires. Une portion est composée d'une ou plusieurs marches, et un symbole peut être attaché à chaque portion d'escalier.
+Les paliers intermédiaires peuvent si besoin être décrits au moyen des dernières marches de chaque portion d'escalier.
+Les rampes d&amp;rsquo;accès sont levées aux ruptures de pentes.</documentation>
+		</annotation>
+	</element>
+	<complexType name="MarcheEscalierPCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType"/>
+					<element name="symbole" minOccurs="0">
+						<complexType>
+							<complexContent>
+								<extension base="gml:AbstractFeatureMemberType">
+									<sequence minOccurs="0">
+										<element ref="pcrs:HabillageSymbolePCRS"/>
+									</sequence>
+									<attributeGroup ref="gml:AssociationAttributeGroup"/>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="MasqueOpacitePCRS" type="pcrs:MasqueOpacitePCRSType" substitutionGroup="pcrs:HabillagePCRS">
+		<annotation>
+			<documentation>Masque d'opacité du PCRS: Lorsqu'une image est disponible, un masque d'opacité correspond à la définition d'une zone surfacique pouvant s'étendre partiellement sur une ou plusieurs orthophotographies et pour laquelle localement les objets vecteur viennent compléter l&amp;rsquo;image. Afin de pouvoir visualiser le vecteur en superposition à l'image sur cette zone, un masque blanc, partiellement transparent est superposé à l'image.
+NOTE Surface</documentation>
+		</annotation>
+	</element>
+	<complexType name="MasqueOpacitePCRSType">
+		<complexContent>
+			<extension base="pcrs:HabillagePCRSType">
+				<sequence>
+					<element name="transparence" type="integer">
+						<annotation>
+							<documentation>Pourcentage de transparence inversement proportionnelle à l'opacité de la zone.</documentation>
+						</annotation>
+					</element>
+					<element name="geometrie" type="gml:SurfacePropertyType">
+						<annotation>
+							<documentation>Géométrie de type surfacique représentant la zone masquée.</documentation>
+						</annotation>
+					</element>
+					<element name="raster" type="pcrs:RasterPCRSPropertyType" maxOccurs="unbounded">
+						<annotation>
+							<appinfo>
+								<reversePropertyName xmlns="http://www.opengis.net/gml/3.2">pcrs:masque</reversePropertyName>
+							</appinfo>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="MurPCRS" type="pcrs:MurPCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Murs, Murs de soutènement, Murs bahuts avec ou sans clôture, Clôtures sur socle, Parapets: Classe permettant de décrire les ouvrages de maçonnerie (très souvent en briques ou parpaings) s'élevant en hauteur et servant à enclore, séparer ou délimiter des espaces. Certains objets de type socle ou bahut peuvent également être surmontés d'une clôture plus légère comme une grille ou un grillage.
+NOTE Polyligne
+cf. modélisation des objets linéaires de la classe abstraite ObjetVecteurPCRS
+Les murs sont levés point par point, au sol, sur chaque côté du domaine public, et complété le cas échéant par un levé point par point, au sol, du côté du domaine privé accessible. Les murs peuvent être indifféremment décrits par leurs côtés sous la forme de polylignes ouvertes, ou par une description plus composite assemblant les polylignes ouvertes et refermant les extrémités pour constituer une unique polyligne fermée.
+Le PCRS ne s'attache pas à décrire ni la hauteur du mur ni son épaisseur, ni même le matériau le constituant.
+On ne cherchera à modéliser les piliers distribués le long ou aux extrémités de murs seulement lorsque leurs dimensions au sol sont différenciables de la largeur du mur, auquel cas de tels piliers seront décrits par des objets de type &lt;PilierPCRS&gt;</documentation>
+		</annotation>
+	</element>
+	<complexType name="MurPCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType"/>
+					<element name="typeMur" type="pcrs:CategorieMurPCRSTypeType" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<simpleType name="NatureAffleurantPCRSTypeType">
+		<annotation>
+			<documentation>Code permettant de décrire de façon extensible la nature d'un affleurant de réseaux</documentation>
+		</annotation>
+		<union memberTypes="pcrs:NatureAffleurantPCRSTypeEnumerationType pcrs:NatureAffleurantPCRSTypeOtherType"/>
+	</simpleType>
+	<simpleType name="NatureAffleurantPCRSTypeEnumerationType">
+		<annotation>
+			<documentation>Code permettant de décrire de façon extensible la nature d'un affleurant de réseaux</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+			<enumeration value="04"/>
+			<enumeration value="05"/>
+			<enumeration value="06"/>
+			<enumeration value="07"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="NatureAffleurantPCRSTypeOtherType">
+		<restriction base="string">
+			<pattern value="other: \w{2,}"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="NatureEmprisePCRSTypeType">
+		<annotation>
+			<documentation>Code permettant de décrire le type d'emprise du PCRS.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="06"/>
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+			<enumeration value="04"/>
+			<enumeration value="05"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="NatureReseauPCRSTypeType">
+		<annotation>
+			<documentation>Code permettant de décrire de façon extensible la nature d'un réseau</documentation>
+		</annotation>
+		<union memberTypes="pcrs:NatureReseauPCRSTypeEnumerationType pcrs:NatureReseauPCRSTypeOtherType"/>
+	</simpleType>
+	<simpleType name="NatureReseauPCRSTypeEnumerationType">
+		<annotation>
+			<documentation>Code permettant de décrire de façon extensible la nature d'un réseau</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="ASSAEU"/>
+			<enumeration value="ELECBT"/>
+			<enumeration value="ELECHT"/>
+			<enumeration value="ASSARU"/>
+			<enumeration value="00"/>
+			<enumeration value="ASSA"/>
+			<enumeration value="AEP"/>
+			<enumeration value="ELECECL"/>
+			<enumeration value="ELEC"/>
+			<enumeration value="GAZ"/>
+			<enumeration value="MULT"/>
+			<enumeration value="ELECSLT"/>
+			<enumeration value="COM"/>
+			<enumeration value="ASSAEP"/>
+			<enumeration value="DECH"/>
+			<enumeration value="INCE"/>
+			<enumeration value="CHIM"/>
+			<enumeration value="CHAU"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="NatureReseauPCRSTypeOtherType">
+		<restriction base="string">
+			<pattern value="other: \w{2,}"/>
+		</restriction>
+	</simpleType>
+	<element name="NomVoiriePCRS" type="pcrs:NomVoiriePCRSType" substitutionGroup="pcrs:HabillageTextePCRS">
+		<annotation>
+			<documentation>Nom de voirie, Nom de voie: Noms de voirie associés aux voies modélisées par tronçons. Ils sont liés à un référentiel donné, et servent de données d'habillage du PCRS.
+Les noms de voirie du PCRS doivent si possible être placés hors espace public (sur les parcelles privées) de façon à ne pas empiéter en zone dense ou très dense sur les espaces liés à la représentation des réseaux (non modélisés dans le PCRS) de façon à permettre un affichage ne se superposant pas (pour des plans au 1/200ème) aux numéros de voirie du PCRS, .
+NOTE Point (propriété de la classe généralisée HabillageTextePCRS)
+Libellé de type texte positionnant de façon ponctuelle le nom de voirie avec une orientation liée au tronçon de voirie le plus proche de la voie associée à l'adresse.</documentation>
+		</annotation>
+	</element>
+	<complexType name="NomVoiriePCRSType">
+		<complexContent>
+			<extension base="pcrs:HabillageTextePCRSType">
+				<sequence>
+					<element name="idNomVoirie" type="string">
+						<annotation>
+							<documentation>Identifiant unique dans le jeu de données des noms de voirie</documentation>
+						</annotation>
+					</element>
+					<element name="positionnement" type="pcrs:CategoriePlacementPCRSTypeType" minOccurs="0">
+						<annotation>
+							<documentation>indication quant au positionnement de l'élément d'habillage par rapport à la voirie.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="NumeroVoiriePCRS" type="pcrs:NumeroVoiriePCRSType" substitutionGroup="pcrs:HabillageTextePCRS">
+		<annotation>
+			<documentation>Numéro d'adresse: Numéros de voirie de type adresse, liés à un référentiel donné, servant de données d'habillage du PCRS.
+Les numéros de voirie du PCRS doivent être positionnés de façon à permettre un affichage à l'intérieur des parcelles (non modélisées dans le PCRS), et ne se superposant pas (pour des plans au 1/200ème) aux noms de voirie du PCRS, de façon à ne pas empiéter en zone dense ou très dense sur les espaces liés à la représentation des réseaux (non modélisés dans le PCRS).
+NOTE Point (propriété de la classe généralisée HabillageTextePCRS)
+Libellé de type texte positionnant de façon ponctuelle le numéro d'adresse.</documentation>
+		</annotation>
+	</element>
+	<complexType name="NumeroVoiriePCRSType">
+		<complexContent>
+			<extension base="pcrs:HabillageTextePCRSType">
+				<sequence>
+					<element name="idNumeroVoirie" type="string">
+						<annotation>
+							<documentation>Identifiant unique dans le jeu de données des numéros de voirie</documentation>
+						</annotation>
+					</element>
+					<element name="positionnement" type="pcrs:CategoriePlacementPCRSTypeType" minOccurs="0">
+						<annotation>
+							<documentation>indication quant au positionnement de l'élément d'habillage par rapport à la voirie.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="ObjetGeneriquePCRS" type="pcrs:ObjetGeneriquePCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Objet générique du PCRS: Classe permettant de décrire un objet levé du PCRS dont la précision du géoréférencement est connue, sans que le gestionnaire du PCRS puisse en déterminer le type dans la nomenclature des objets du PCRS : cette classe d'objet sert principalement à initialiser le PCRS avec tous les objets utilisables pour une cotation et dont il faudra déterminer le type dans la nomenclature et la thématique associée.
+NOTE Point, Ligne polygonale, ou Polygone
+Les aspects de la modélisation géométrique sont propres à ceux décrits dans la modélisation des objets linéaires de la classe abstraite &lt;ObjetVecteurPCRS&gt;</documentation>
+		</annotation>
+	</element>
+	<complexType name="ObjetGeneriquePCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:GeometryPropertyType">
+						<annotation>
+							<documentation>Géométrie de l'objet générique.</documentation>
+						</annotation>
+					</element>
+					<element name="identification" type="string" minOccurs="0">
+						<annotation>
+							<documentation>L'identification décrit le nom de la classe spécialisée selon la nomenclature des objets du PCRS.
+Inconnue à l'initialisation du PCRS par la collectivité gestionnaire, elle peut être précisée lors de tout échange inverse entre utilisateur et collectivité gestionnaire.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="ObjetVecteurPCRS" type="pcrs:ObjetVecteurPCRSType" abstract="true" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Objet vecteur du PCRS: Classe abstraite permettant de décrire tous les objets levés du PCRS autres que les primitives de type point levé. Elle sert principalement à définir les caractéristiques, attributs et relations communs à tous.
+Seul le géoréférencement précis (centimétrique) des objets du PCRS est à prendre en compte dans cette modélisation conceptuelle : tout autre usage, et en particulier métier ne fait pas partie du périmètre des objets du PCRS
+NOTE Point(s) ou Ligne polygonale, s'appuyant sur des points levés
+La modélisation géométrique est propre à chacun des objets du PCRS, elle sera donc décrite dans la partie suivante du catalogue propre à chacun des objets dérivés de la classe ObjetVecteurPCRS (paragraphes B.3.5 à B.3.18)
+Les objets linéaires en courbe peuvent résulter de primitives complexes (comme par exemple les arcs). Attention cependant à bien gérer les échanges de données avec le DAO dont les objets sont en général issus. Attention également à bien assurer en relation avec les objets du PCRS une densité de points levés suffisante pour garantir les objectifs de précisions planimétrique et altimétrique d'ordre centimétrique du PCRS : en particulier, on s'attachera à toute situation de rupture de pente de faire correspondre un point levé topographique, sur lequel s'appuiera obligatoirement la définition géométrique de l'objet du PCRS.
+On s'attachera également sur l'emprise du levé topographique à garantir une continuité optimale des objets linéaires (en privilégiant ainsi la longueur totale de l'objet), sans pour autant se soucier d'une modélisation topologique des objets : chacun des segments peut s'appuyer sur un point levé topographique, mais les relations topologiques entre n&amp;oelig;uds et segments n'ont pas à être décrites.</documentation>
+		</annotation>
+	</element>
+	<complexType name="ObjetVecteurPCRSType" abstract="true">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element minOccurs="0" name="dateLeve" type="date">
+						<annotation>
+							<documentation>Date de levé de l&amp;rsquo;objet</documentation>
+						</annotation>
+					</element>
+					<element name="idObjet" type="string">
+						<annotation>
+							<documentation>Identifiant unique dans le jeu de données des objets du PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="thematique" type="pcrs:CategorieThematiquePCRSTypeType">
+						<annotation>
+							<documentation>La thématique à laquelle est associé chaque objet du PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="qualiteCategorisation" type="pcrs:QualiteCategorisationPCRSTypeType">
+						<annotation>
+							<documentation>Indication du producteur quant à la qualité de la catégorisation.
+Permet des représentations plus riches pour les migrations / reprises de données.</documentation>
+						</annotation>
+					</element>
+					<element name="precisionPlanimetrique" type="pcrs:CategoriePrecisionPCRSTypeType">
+						<annotation>
+							<documentation>Intervalle de précision dans lequel s'exprime en cm la précision planimétrique associée au levé topographique de l'objet.</documentation>
+						</annotation>
+					</element>
+					<element name="precisionAltimetrique" type="pcrs:CategoriePrecisionPCRSTypeType" minOccurs="0">
+						<annotation>
+							<documentation>Intervalle de précision dans lequel s'exprime en cm la précision altimétrique associée au levé topographique de l'objet.</documentation>
+						</annotation>
+					</element>
+					<element name="producteur" type="string">
+						<annotation>
+							<documentation>Producteur de la donnée.</documentation>
+						</annotation>
+					</element>
+					<element name="pointLeve" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="gml:AbstractFeatureMemberType">
+									<sequence minOccurs="0">
+										<element ref="pcrs:PointLevePCRS"/>
+									</sequence>
+									<attributeGroup ref="gml:AssociationAttributeGroup"/>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="PCRSFeatureMemberType" type="pcrs:PCRSFeatureMemberType" substitutionGroup="gml:AbstractObject"/>
+	<complexType name="PCRSFeatureMemberType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureMemberType">
+				<sequence minOccurs="0">
+					<element ref="gml:AbstractFeature"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="PCRSFeatureMemberTypeProperty">
+		<sequence>
+			<element ref="pcrs:PCRSFeatureMemberType"/>
+		</sequence>
+	</complexType>
+	<element name="PilePontPCRS" type="pcrs:PilePontPCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Pile ou culée de pont du PCRS: Classe permettant de décrire les appuis massifs et permanents supportant les tabliers des ponts
+NOTE Polyligne ouverte ou fermée (GM_Curve)
+Les piles de pont sont levées le long de la limite apparente avec le revêtement voisin, point à point et au niveau du sol (fil d'eau).
+Les autres aspects de la modélisation géométrique sont propres à  ceux décrits dans la modélisation des objets linéaires de la classe abstraite ObjetVecteurPCRS</documentation>
+		</annotation>
+	</element>
+	<complexType name="PilePontPCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie">
+						<annotation>
+							<documentation>Géométrie de type polygone.</documentation>
+						</annotation>
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="gml:Polygon"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="PilierPCRS" type="pcrs:PilierPCRSType" abstract="true" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Pilier: Classe abstraite permettant de décrire une construction en maçonnerie ou en métal, de section circulaire, carrée, rectangulaire ou polygonale érigée dans le but de reprendre ou supporter des charges (AIVF_20_2)
+NOTE Selon les classes de pilier spécialisées et représentées par un symbole &lt;PilierRegulierPCRS&gt; ou un polygone &lt;PilierParticulierPCRS&gt;
+Propre à chacune des classes de pilier spécialisées &lt;PilierRegulierPCRS&gt; et &lt;PilierParticulierPCRS&gt; du PCRS
+N.B. La hauteur du pilier ne fait pas partie des informations levées dans le cadre du PCRS</documentation>
+		</annotation>
+	</element>
+	<complexType name="PilierPCRSType" abstract="true">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="PilierParticulierPCRS" type="pcrs:PilierParticulierPCRSType" substitutionGroup="pcrs:PilierPCRS">
+		<annotation>
+			<documentation>Pilier polygonal: Classe permettant de décrire les constructions en maçonnerie ou en métal, de section polygonale érigées dans le but de reprendre ou supporter des charges
+NOTE Polyligne fermée
+Le pilier est levé point par point au niveau du sol et au sens de l'emprise maximum.
+
+N.B. La hauteur du pilier ne fait pas partie des informations levées dans le cadre du PCRS</documentation>
+		</annotation>
+	</element>
+	<complexType name="PilierParticulierPCRSType">
+		<complexContent>
+			<extension base="pcrs:PilierPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType">
+						<annotation>
+							<documentation>Géométrie de type courbe.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="PilierRegulierPCRS" type="pcrs:PilierRegulierPCRSType" substitutionGroup="pcrs:PilierPCRS">
+		<annotation>
+			<documentation>Pilier circulaire, pilier carré, pilier rectangulaire: Classe permettant de décrire les constructions en maçonnerie ou en métal, de section circulaire, carrée, rectangulaire érigées dans le but de reprendre ou supporter des charges
+NOTE Point</documentation>
+		</annotation>
+	</element>
+	<complexType name="PilierRegulierPCRSType">
+		<complexContent>
+			<extension base="pcrs:PilierPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:PointPropertyType">
+						<annotation>
+							<documentation>Géométrie de type point.</documentation>
+						</annotation>
+					</element>
+					<element name="section" type="pcrs:SectionPilierPCRSTypeType">
+						<annotation>
+							<documentation>Forme de la section à la base du pilier</documentation>
+						</annotation>
+					</element>
+					<element name="angleRotation" type="double">
+						<annotation>
+							<documentation>Utilisé uniquement pour l'orientation du symbole de poteau
+Peut être étendu pour un poteau ovale pour orienter le symbole</documentation>
+						</annotation>
+					</element>
+					<element name="longueur" type="double">
+						<annotation>
+							<documentation>Utilisé uniquement pour la mise à l'échelle X du symbole de poteau après rotation</documentation>
+						</annotation>
+					</element>
+					<element name="largeur" type="double">
+						<annotation>
+							<documentation>Utilisé uniquement pour la mise à l'échelle Y du symbole de poteau après rotation</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="PlanCorpsRueSimplifie" type="pcrs:PlanCorpsRueSimplifieType" substitutionGroup="gml:AbstractFeature"/>
+	<complexType name="PlanCorpsRueSimplifieType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="featureMember" type="pcrs:PCRSFeatureMemberType" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+				<attribute name="version" use="required"/>
+				<attributeGroup ref="gml:AggregationAttributeGroup"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="PointCanevasPCRS" type="pcrs:PointCanevasPCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Points de canevas topographique: Un canevas topographique est constitué d'un ensemble de points matérialisés sur le terrain, repérés en coordonnées XY et Z dans les référentiels géographiques planimétriques et altimétriques en vigueur, facilitant ainsi la production de séries de données géographiques cohérentes et homogènes lors des levés topographiques réalisés par les géomètres. Ils disposent d'une immatriculation spécifique au canevas utilisé et sont en général documentés par une fiche signalétique accessible au public
+NOTE Point
+Lorsque l'altimétrie du point de canevas est disponible, il est obligatoire de la fournir sous forme de coordonnée Z</documentation>
+		</annotation>
+	</element>
+	<complexType name="PointCanevasPCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:PointPropertyType">
+						<annotation>
+							<documentation>Géométrie du point</documentation>
+						</annotation>
+					</element>
+					<element name="canevas" type="string" minOccurs="0">
+						<annotation>
+							<documentation>Type de canevas auquel appartient le point considéré</documentation>
+						</annotation>
+					</element>
+					<element name="precisionXY" type="integer" minOccurs="0">
+						<annotation>
+							<documentation>Précision planimétrique exprimée en cm</documentation>
+						</annotation>
+					</element>
+					<element name="precisionZ" type="integer" minOccurs="0">
+						<annotation>
+							<documentation>Précision altimétrique exprimée en cm</documentation>
+						</annotation>
+					</element>
+					<element name="immatriculation" type="string" minOccurs="0">
+						<annotation>
+							<documentation>Référence externe selon la convention d'immatriculation du canevas considéré</documentation>
+						</annotation>
+					</element>
+					<element name="dateCreation" type="date" minOccurs="0">
+						<annotation>
+							<documentation>Date de création ou de mise à jour des données du point de canevas</documentation>
+						</annotation>
+					</element>
+					<element name="fiche" type="string" minOccurs="0">
+						<annotation>
+							<documentation>Adresse de type URL susceptible de fournir des informations supplémentaires, comme des photographies de repérage,  sur le point de canevas</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="PointLevePCRS" type="pcrs:PointLevePCRSType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Point levé du PCRS: Point géoréférencé en planimétrie, ou planimétrie et altimétrie du PCRS
+NOTE Point
+La modélisation géométrique par point(s) est propre à chacun des objets du PCRS, elle sera donc décrite dans la partie du catalogue propre à chacun des objets dérivés de la classe ObjetPCRS (paragraphes B.3.5 à B.3.18)</documentation>
+		</annotation>
+	</element>
+	<complexType name="PointLevePCRSType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="geometrie" type="gml:PointPropertyType">
+						<annotation>
+							<documentation>Géométrie de type ponctuel.</documentation>
+						</annotation>
+					</element>
+					<element name="numeroPoint" type="string">
+						<annotation>
+							<documentation>Numéro attribué au point levé lors du levé topographique ou de l'intégration au référentiel selon une ou plusieurs méthodologies à préciser si possible dans les métadonnées</documentation>
+						</annotation>
+					</element>
+					<element name="precisionXY" type="integer">
+						<annotation>
+							<documentation>Précision planimétrique exprimée en cm</documentation>
+						</annotation>
+					</element>
+					<element name="precisionZ" type="integer" minOccurs="0">
+						<annotation>
+							<documentation>Précision altimétrique exprimée en cm</documentation>
+						</annotation>
+					</element>
+					<element name="horodatage" type="date" minOccurs="0">
+						<annotation>
+							<documentation>Horodatage du point au moment du levé topographique</documentation>
+						</annotation>
+					</element>
+					<element name="producteur" type="string">
+						<annotation>
+							<documentation>Producteur de la donnée.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="ProeminenceBatiPCRS" type="pcrs:ProeminenceBatiPCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Proéminence du Bâti, Soubassement: Classe permettant de décrire l'ensemble des constructions liées au bâtiment, dont l'emprise est différente de celle levée par les façades (AIVF_19_8), et levée au niveau du trottoir
+NOTE Polyligne
+La proéminence du bâti est levée point par point au niveau du trottoir et au sens de l'emprise maximum du bâtiment sur le domaine public.
+Les autres aspects de la modélisation géométrique sont propres à  ceux décrits dans la modélisation des objets linéaires de la classe abstraite ObjetPCRS</documentation>
+		</annotation>
+	</element>
+	<complexType name="ProeminenceBatiPCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType">
+						<annotation>
+							<documentation>Géométrie de type courbe</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<simpleType name="ProprieteEspaceTypeType">
+		<annotation>
+			<documentation>Code permettant de décrire la nature de l'espace au sens distinction de l'espace public / espace privé</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+		</restriction>
+	</simpleType>
+	<element name="QuaiFluvioMaritimePCRS" type="pcrs:QuaiFluvioMaritimePCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>&lt;/b&gt;
+Ouvrage le long de berge, de rive ou de rivage d'un port ou d'une voie navigable, aménagée en vue de permettre l'accostage des bâtiments de navigation, l'embarquement ou le débarquement des passagers, le chargement ou le déchargement des marchandises. 
+&lt;b&gt;
+NOTE &lt;/b&gt;
+Polyligne
+Les quais sont levés au nez du quai.
+Les autres aspects de la modélisation géométrique sont propres à  ceux décrits dans la modélisation des objets linéaires de la classe abstraite ObjetVecteurPCRS.
+&lt;b&gt;</documentation>
+		</annotation>
+	</element>
+	<complexType name="QuaiFluvioMaritimePCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="QuaiRailPCRS" type="pcrs:QuaiRailPCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>&lt;/b&gt;
+Plate-forme le long des voies pour le chargement ou le déchargement à niveau des wagons.
+&lt;b&gt;
+NOTE &lt;/b&gt;
+Polyligne
+Les quais sont levés au nez du quai.
+Les autres aspects de la modélisation géométrique sont propres à  ceux décrits dans la modélisation des objets linéaires de la classe abstraite ObjetVecteurPCRS.
+&lt;b&gt;</documentation>
+		</annotation>
+	</element>
+	<complexType name="QuaiRailPCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<simpleType name="QualiteCategorisationPCRSTypeType">
+		<annotation>
+			<documentation>Code permettant de décrire de façon extensible la qualité de catégorisation des objets du PCRS.</documentation>
+		</annotation>
+		<union memberTypes="pcrs:QualiteCategorisationPCRSTypeEnumerationType pcrs:QualiteCategorisationPCRSTypeOtherType"/>
+	</simpleType>
+	<simpleType name="QualiteCategorisationPCRSTypeEnumerationType">
+		<annotation>
+			<documentation>Code permettant de décrire de façon extensible la qualité de catégorisation des objets du PCRS.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="QualiteCategorisationPCRSTypeOtherType">
+		<restriction base="string">
+			<pattern value="other: \w{2,}"/>
+		</restriction>
+	</simpleType>
+	<element name="RailPCRS" type="pcrs:RailPCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Rail d'un tronçon de voie ferrée: Classe permettant de décrire de façon unitaire et continue l'assemblage de rails d'un tronçon de voie ferrée. Un rail est un guide linéaire constitué de profilés d'acier laminés soudés bout à bout, et constituant le chemin de roulement et de guidage des roues des véhicules ferroviaires. Une voie ferroviaire simple est constituée de deux rails parallèles et à écartement fixe et standardisé qui peut être différent par pays (1,435m en France).
+PHOTO
+NOTE Polylignes
+cf. modélisation des objets linéaires de la classe abstraite ObjetPCRS
+Le levé topographique d'une voie ferrée simple est effectué rail par rail et toujours à l'intérieur vers l'axe de la voie, de façon à maintenir un écart uniforme entre les deux polylignes, et égal à l'écartement du rail. Le nivellement de chaque point de levé doit correspondre à un point situé sur la partie supérieure du rail en contact au niveau de la bande de roulement. Le nivellement des deux rails d'une même section transversale d'une voie simple est normalement identique pour un alignement droit et peut être différent pour une courbe ou une clothoïde (raccordement entre courbe et alignement droit) selon le tracé en plan de la voie ferrée.
+Le gestionnaire du PCRS a toute latitude pour préciser lorsque les circonstances le justifient d'autres modes de levé (typiquement dans l'axe du rail au milieu de la bande de roulement sur un rail Vignole) : le cahier des charges ainsi que les Métadonnées de livraison devront alors explicitement préciser le mode de levé associé
+PHOTO
+Rail Vignole
+Rail à gorge
+Un rail est souvent décrit dans le secteur ferroviaire par emprises et par tronçons. Cette description « métier » peut être conservée dans le PCRS, mais les attributs servant à la décrire ne font pas à proprement parler partie du PCRS.</documentation>
+		</annotation>
+	</element>
+	<complexType name="RailPCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType">
+						<annotation>
+							<documentation>Géométrie de type courbe.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RasterPCRS" type="pcrs:RasterPCRSType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Orthophotoplan du PCRS: Classe abstraite permettant de décrire toutes les ortho-images utilisées dans le cadre du PCRS qu&amp;rsquo;elles appartiennent ou non au PCRS. Elle sert principalement à définir les caractéristiques, attributs et relations communs à tous.</documentation>
+		</annotation>
+	</element>
+	<complexType name="RasterPCRSType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="producteur" type="string">
+						<annotation>
+							<documentation>Producteur de la donnée</documentation>
+						</annotation>
+					</element>
+					<element name="nomImage" type="string">
+						<annotation>
+							<documentation>Nom de l'image associée.</documentation>
+						</annotation>
+					</element>
+					<element name="typeImage" type="string">
+						<annotation>
+							<documentation>Format de l'image.</documentation>
+						</annotation>
+					</element>
+					<element name="geometrie">
+						<annotation>
+							<documentation>Géométrie de type surfacique représentant l'emprise de la dalle.</documentation>
+						</annotation>
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="gml:Polygon"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+						</complexType>
+					</element>
+					<element name="idPCRS" type="string">
+						<annotation>
+							<documentation>Identifiant unique dans le jeu de données des objets du PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="resolution" type="integer">
+						<annotation>
+							<documentation>La taille au sol d&amp;rsquo;un pixel de l&amp;rsquo;ortho-image en cm</documentation>
+						</annotation>
+					</element>
+					<element name="dateAcquisition" type="date">
+						<annotation>
+							<documentation>La date et l&amp;rsquo;heure à laquelle la photo aérienne a été prise / la date à laquelle la mission aérienne a eu lieu (au détail du jour ou celui du mois voire l&amp;rsquo;année)</documentation>
+						</annotation>
+					</element>
+					<element name="dateRecette" type="date">
+						<annotation>
+							<documentation>La date à laquelle le maître d&amp;rsquo;ouvrage a intégré l&amp;rsquo;ortho-image dans le PCRS</documentation>
+						</annotation>
+					</element>
+					<element name="precisionPlanimetriqueCorpsDeRue" type="pcrs:CategoriePrecisionPCRSTypeType">
+						<annotation>
+							<documentation>Intervalle de précision dans lequel s'exprime en cm la précision planimétrique associée aux informations photométriques sur l&amp;rsquo;orthophotoplan pour ce qui concerne les surfaces couverte par les corps de rue</documentation>
+						</annotation>
+					</element>
+					<element name="precisionPlanimetriqueZoneNaturelle" type="pcrs:CategoriePrecisionPCRSTypeType">
+						<annotation>
+							<documentation>ntervalle de précision dans lequel s'exprime en cm la précision planimétrique associée aux informations photométriques sur l&amp;rsquo;orthophotoplan pour ce qui concerne les surfaces non couverte par les corps de rue</documentation>
+						</annotation>
+					</element>
+					<element name="descriptionElementsQualite" type="string">
+						<annotation>
+							<documentation>Description des paramètres externes donnant les clés de compréhension de la qualité de l&amp;rsquo;ortho-imagerie</documentation>
+						</annotation>
+					</element>
+					<element name="masque" minOccurs="0" maxOccurs="unbounded">
+						<annotation>
+							<appinfo>
+								<reversePropertyName xmlns="http://www.opengis.net/gml/3.2">pcrs:raster</reversePropertyName>
+							</appinfo>
+						</annotation>
+						<complexType>
+							<sequence minOccurs="0">
+								<element ref="pcrs:MasqueOpacitePCRS"/>
+							</sequence>
+							<attributeGroup ref="gml:AssociationAttributeGroup"/>
+							<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="RasterPCRSPropertyType">
+		<sequence minOccurs="0">
+			<element ref="pcrs:RasterPCRS"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</complexType>
+	<simpleType name="SectionPilierPCRSTypeType">
+		<annotation>
+			<documentation>Code permettant de décrire le type de pilier</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+			<enumeration value="00"/>
+		</restriction>
+	</simpleType>
+	<element name="SeuilPCRS" type="pcrs:SeuilPCRSType" substitutionGroup="pcrs:ObjetVecteurPCRS">
+		<annotation>
+			<documentation>Seuil, Ouverture d'un bâtiment ou d'un mur: Classe permettant de décrire l'ensemble des portes, portes cochères, portails, seuils permettant l'entrée ou la sortie dans un bâtiment ou dans une enceinte (AIVF_19_3)
+NOTE Ligne
+La ligne est définie comme le segment reliant deux points levés (dans le même sens que le levé de façade du bâtiment ou du mur), et de part et d'autre de l'ouverture du bâtiment ou du mur
+Le point de seuil, déterminé par calcul, est situé à l'axe du seuil, et sert éventuellement à positionner un symbole décrit par un objet SymboleHabillagePCRS</documentation>
+		</annotation>
+	</element>
+	<complexType name="SeuilPCRSType">
+		<complexContent>
+			<extension base="pcrs:ObjetVecteurPCRSType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType">
+						<annotation>
+							<documentation>Géométrie de type courbe.</documentation>
+						</annotation>
+					</element>
+					<element name="symbole" minOccurs="0">
+						<complexType>
+							<complexContent>
+								<extension base="gml:AbstractFeatureMemberType">
+									<sequence minOccurs="0">
+										<element ref="pcrs:HabillageSymbolePCRS"/>
+									</sequence>
+									<attributeGroup ref="gml:AssociationAttributeGroup"/>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<simpleType name="TexteJustificationPCRSTypeType">
+		<annotation>
+			<documentation>Code permettant de justifier un texte d'habillage</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="G"/>
+			<enumeration value="C"/>
+			<enumeration value="D"/>
+		</restriction>
+	</simpleType>
+	<element name="TronconVoirie" type="pcrs:TronconVoirieType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>Tronçon de Voie: Le tronçon de voirie du PCRS est un segment d'axe de voie entre deux intersections (qui ne sont pas modélisées dans le PCRS par ailleurs).
+Il sert essentiellement à identifier en premier lieu les emprises de publication du PCRS qui le concernent.
+Les noms de voirie, qui nécessitent un positionnement spécifique en dehors de l'espace où figurent les réseaux, et en particulier en zone urbaine dense, sont modélisés par ailleurs en tant que NomVoiriePCRS et ne sont donc pas gérés comme des données attributaires des tronçons de voirie du PCRS.
+De même, les numéros d'adresse, modélisés par ailleurs en tant que NumeroVoiriePCRS ne sont pas non plus liés aux tronçons de voirie du PCRS
+NOTE Polyligne
+Le tronçon de voirie s'appuie sur les tronçons du filaire des voies entretenu par la collectivité gestionnaire du PCRS, et pouvant s'appuyer sur des référentiels comme la BDUni ou la BD TOPO</documentation>
+		</annotation>
+	</element>
+	<complexType name="TronconVoirieType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="geometrie" type="gml:CurvePropertyType">
+						<annotation>
+							<documentation>Géométrie de type courbe.</documentation>
+						</annotation>
+					</element>
+					<element name="source" type="string">
+						<annotation>
+							<documentation>Acronyme du référentiel utilisé</documentation>
+						</annotation>
+					</element>
+					<element name="reference" type="string">
+						<annotation>
+							<documentation>Identifiant unique du tronçon dans le référentiel source utilisé</documentation>
+						</annotation>
+					</element>
+					<element name="propriete" type="pcrs:ProprieteEspaceTypeType" minOccurs="0">
+						<annotation>
+							<documentation>Distinction d'appartenance d'un tronçon de voirie à l'espace public ou à l'espace privé.</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>
