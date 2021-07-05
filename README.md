@@ -23,5 +23,5 @@ d'applications requérant une précision d'ordre centimétrique et un géoréfé
 
 ## Liens utiles
 
-* [http://cnig.gouv.fr/wp-content/uploads/2019/02/CNIG_RTGE_PCRS_v2.0_r1.pdf](Standard du PCRS v2.0 du 15 septembre validé par la Commission Données)
+* [cnig.gouv.fr - Standard du PCRS v2.0 du 15 septembre validé par la Commission Données (PDF)](http://cnig.gouv.fr/wp-content/uploads/2019/02/CNIG_RTGE_PCRS_v2.0_r1.pdf)
 * [cnig.gouv.fr  - Ressources DT-DICT](http://cnig.gouv.fr/?page_id=11745)
